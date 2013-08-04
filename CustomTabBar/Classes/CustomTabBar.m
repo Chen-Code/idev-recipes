@@ -30,10 +30,12 @@
 #define GLOW_IMAGE_TAG 2394858
 #define TAB_ARROW_IMAGE_TAG 2394859
 #define SELECTED_ITEM_TAG 2394860
+#define TAB_SELECTED_IMAGE_TAG 23494861
 
 @interface CustomTabBar (PrivateMethods)
 - (CGFloat) horizontalLocationFor:(NSUInteger)tabIndex;
 - (void) addTabBarArrowAtIndex:(NSUInteger)itemIndex;
+- (void) addTabBarSelectedImageAtIndex:(NSUInteger)itemIndex;
 -(UIButton*) buttonAtIndex:(NSUInteger)itemIndex width:(CGFloat)width;
 -(UIImage*) tabBarImage:(UIImage*)startImage size:(CGSize)targetSize backgroundImage:(UIImage*)backgroundImage;
 -(UIImage*) blackFilledImageWithWhiteBackgroundUsing:(UIImage*)startImage;
@@ -58,8 +60,9 @@
     // Add the background image
     UIImage* backgroundImage = [delegate backgroundImage];
     UIImageView* backgroundImageView = [[[UIImageView alloc] initWithImage:backgroundImage] autorelease];
-    backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+//    backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
     backgroundImageView.frame = CGRectMake(0, 0, backgroundImage.size.width, backgroundImage.size.height);
+      NSLog(@"backgroundImageView frame is %@", NSStringFromCGRect(backgroundImageView.frame));
     [self addSubview:backgroundImageView];
 
     // Adjust our width based on the number of items & the width of each item
@@ -111,7 +114,7 @@
       button.highlighted = button.selected ? NO : YES;
       button.tag = SELECTED_ITEM_TAG;
       
-      UIImageView* tabBarArrow = (UIImageView*)[self viewWithTag:TAB_ARROW_IMAGE_TAG];
+      UIImageView* tabBarArrow = (UIImageView*)[self viewWithTag:TAB_SELECTED_IMAGE_TAG];
       NSUInteger selectedIndex = [buttons indexOfObjectIdenticalTo:button];
       if (tabBarArrow)
       {
@@ -124,7 +127,8 @@
       }
       else
       {
-        [self addTabBarArrowAtIndex:selectedIndex];
+//        [self addTabBarArrowAtIndex:selectedIndex];
+          [self addTabBarSelectedImageAtIndex:selectedIndex];
       }
     }
     else
@@ -200,10 +204,12 @@
 
 - (CGFloat) horizontalLocationFor:(NSUInteger)tabIndex
 {
-  UIImageView* tabBarArrow = (UIImageView*)[self viewWithTag:TAB_ARROW_IMAGE_TAG];
+  UIImageView* tabBarArrow = (UIImageView*)[self viewWithTag:TAB_SELECTED_IMAGE_TAG];  //TAB_ARROW_IMAGE_TAG
   
   // A single tab item's width is the same as the button's width
   UIButton* button = [buttons objectAtIndex:tabIndex];
+    return button.frame.origin.x;
+#if 0
   CGFloat tabItemWidth = button.frame.size.width;
 
   // A half width is tabItemWidth divided by 2 minus half the width of the arrow
@@ -211,6 +217,7 @@
   
   // The horizontal location is the index times the width plus a half width
   return button.frame.origin.x + halfTabItemWidth;
+#endif
 }
 
 - (void) addTabBarArrowAtIndex:(NSUInteger)itemIndex
@@ -223,6 +230,18 @@
   tabBarArrow.frame = CGRectMake([self horizontalLocationFor:itemIndex], verticalLocation, tabBarArrowImage.size.width, tabBarArrowImage.size.height);
 
   [self addSubview:tabBarArrow];
+}
+
+- (void) addTabBarSelectedImageAtIndex:(NSUInteger)itemIndex
+{
+    UIImage* tabBarSelectedImage = [delegate selectedItemImage];
+    UIImageView* tabBarSelectedView = [[[UIImageView alloc] initWithImage:tabBarSelectedImage] autorelease];
+    tabBarSelectedView.tag = TAB_SELECTED_IMAGE_TAG;
+    // To get the vertical location we go up by the height of arrow and then come back down 2 pixels so the arrow is slightly on top of the tab bar.
+    CGFloat verticalLocation = 0; //-tabBarSelectedImage.size.height + 2;
+    tabBarSelectedView.frame = CGRectMake([self horizontalLocationFor:itemIndex], verticalLocation, tabBarSelectedImage.size.width, tabBarSelectedImage.size.height);  //[self horizontalLocationFor:itemIndex]
+    
+    [self addSubview:tabBarSelectedView];
 }
 
 // Create a button at the provided index
@@ -245,8 +264,8 @@
   [button setImage:buttonPressedImage forState:UIControlStateSelected];
 
   // Ask the delegate for the highlighted/selected state image & set it as the selected background state
-  [button setBackgroundImage:[delegate selectedItemImage] forState:UIControlStateHighlighted];
-  [button setBackgroundImage:[delegate selectedItemImage] forState:UIControlStateSelected];
+//  [button setBackgroundImage:[delegate selectedItemImage] forState:UIControlStateHighlighted];
+//  [button setBackgroundImage:[delegate selectedItemImage] forState:UIControlStateSelected];
   
   button.adjustsImageWhenHighlighted = NO;
   

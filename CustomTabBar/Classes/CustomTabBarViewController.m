@@ -30,6 +30,7 @@
 #define SELECTED_VIEW_CONTROLLER_TAG 98456345
 
 static NSArray* tabBarItems = nil;
+const CGFloat tabbarHeight = 45.0;
 
 @implementation CustomTabBarViewController
 @synthesize tabBar;
@@ -53,11 +54,11 @@ static NSArray* tabBarItems = nil;
   detailController5.view.backgroundColor = [UIColor purpleColor];
 
   tabBarItems = [[NSArray arrayWithObjects:
-              [NSDictionary dictionaryWithObjectsAndKeys:@"chat.png", @"image", detailController1, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"compose-at.png", @"image", detailController2, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"messages.png", @"image", detailController3, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"magnifying-glass.png", @"image", detailController4, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"more.png", @"image", detailController5, @"viewController", nil], nil] retain];
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_1.png", @"image", detailController1, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_2.png", @"image", detailController2, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_3.png", @"image", detailController3, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_4.png", @"image", detailController4, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_5.png", @"image", detailController5, @"viewController", nil], nil] retain];
 }
 
 - (void)viewDidLoad
@@ -65,13 +66,13 @@ static NSArray* tabBarItems = nil;
   [super viewDidLoad];
 
   // Use the TabBarGradient image to figure out the tab bar's height (22x2=44)
-  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
+//  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
   
   // Create a custom tab bar passing in the number of items, the size of each item and setting ourself as the delegate
-  self.tabBar = [[[CustomTabBar alloc] initWithItemCount:tabBarItems.count itemSize:CGSizeMake(self.view.frame.size.width/tabBarItems.count, tabBarGradient.size.height*2) tag:0 delegate:self] autorelease];
+  self.tabBar = [[[CustomTabBar alloc] initWithItemCount:tabBarItems.count itemSize:CGSizeMake(self.view.frame.size.width/tabBarItems.count, tabbarHeight) tag:0 delegate:self] autorelease];
   
   // Place the tab bar at the bottom of our view
-  tabBar.frame = CGRectMake(0,self.view.frame.size.height-(tabBarGradient.size.height*2),self.view.frame.size.width, tabBarGradient.size.height*2);
+  tabBar.frame = CGRectMake(0,self.view.frame.size.height-tabbarHeight,self.view.frame.size.width, tabbarHeight);
   [self.view addSubview:tabBar];
   
   // Select the first tab
@@ -92,6 +93,7 @@ static NSArray* tabBarItems = nil;
 
 - (UIImage*) backgroundImage
 {
+#if 0
   // The tab bar's width is the same as our width
   CGFloat width = self.view.frame.size.width;
   // Get the image that will form the top of the background
@@ -113,6 +115,10 @@ static NSArray* tabBarItems = nil;
   UIGraphicsEndImageContext();
 
   return resultImage;
+#endif
+    
+    UIImage* topImage = [UIImage imageNamed:@"mask_navbar.png"];
+    return topImage;
 }
 
 // This is the blue background shown for selected tab bar items
@@ -124,6 +130,7 @@ static NSArray* tabBarItems = nil;
 // This is the glow image shown at the bottom of a tab bar to indicate there are new items
 - (UIImage*) glowImage
 {
+#if 0
   UIImage* tabBarGlow = [UIImage imageNamed:@"TabBarGlow.png"];
   
   // Create a new image using the TabBarGlow image but offset 4 pixels down
@@ -137,11 +144,15 @@ static NSArray* tabBarItems = nil;
   UIGraphicsEndImageContext();
 
   return resultImage;
+#endif
 }
 
 // This is the embossed-like image shown around a selected tab bar item
 - (UIImage*) selectedItemImage
 {
+    UIImage* topImage = [UIImage imageNamed:@"home_bottom_tab_arrow.png"];
+    return topImage;
+#if 0
   // Use the TabBarGradient image to figure out the tab bar's height (22x2=44)
   UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
   CGSize tabBarItemSize = CGSizeMake(self.view.frame.size.width/tabBarItems.count, tabBarGradient.size.height*2);
@@ -155,6 +166,7 @@ static NSArray* tabBarItems = nil;
   UIGraphicsEndImageContext();
   
   return selectedItemImage;
+#endif
 }
 
 - (UIImage*) tabBarArrowImage
@@ -173,10 +185,10 @@ static NSArray* tabBarItems = nil;
   UIViewController* viewController = [data objectForKey:@"viewController"];
 
   // Use the TabBarGradient image to figure out the tab bar's height (22x2=44)
-  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
+//  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
 
   // Set the view controller's frame to account for the tab bar
-  viewController.view.frame = CGRectMake(0,0,self.view.bounds.size.width, self.view.bounds.size.height-(tabBarGradient.size.height*2));
+  viewController.view.frame = CGRectMake(0,0,self.view.bounds.size.width, self.view.bounds.size.height-tabbarHeight);
 
   // Se the tag so we can find it later
   viewController.view.tag = SELECTED_VIEW_CONTROLLER_TAG;
@@ -185,12 +197,13 @@ static NSArray* tabBarItems = nil;
   [self.view insertSubview:viewController.view belowSubview:tabBar];
   
   // In 1 second glow the selected tab
-  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(addGlowTimerFireMethod:) userInfo:[NSNumber numberWithInteger:itemIndex] repeats:NO];
+//  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(addGlowTimerFireMethod:) userInfo:[NSNumber numberWithInteger:itemIndex] repeats:NO];
   
 }
 
 - (void)addGlowTimerFireMethod:(NSTimer*)theTimer
 {
+    return;
   // Remove the glow from all tab bar items
   for (NSUInteger i = 0 ; i < tabBarItems.count ; i++)
   {
