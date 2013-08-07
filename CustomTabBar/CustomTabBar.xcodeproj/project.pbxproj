@@ -36,6 +36,8 @@
 		7F48D58812D1B88500DE44F6 /* TabBarNipple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F48D57412D1B88500DE44F6 /* TabBarNipple@2x.png */; };
 		7F48D58912D1B88500DE44F6 /* TabBarSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F48D57512D1B88500DE44F6 /* TabBarSelection.png */; };
 		7F48D58A12D1B88500DE44F6 /* TabBarSelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F48D57612D1B88500DE44F6 /* TabBarSelection@2x.png */; };
+		9667BFDA17AF1BE700E28245 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9667BFD917AF1BE700E28245 /* FirstViewController.m */; };
+		9667BFDE17AF1BFD00E28245 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9667BFDD17AF1BFD00E28245 /* SecondViewController.m */; };
 		96EC14CF17AE4CC500B245CC /* mask_navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EC14C117AE4CC500B245CC /* mask_navbar.png */; };
 		96EC14D017AE4CC500B245CC /* mask_navbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EC14C217AE4CC500B245CC /* mask_navbar@2x.png */; };
 		96EC14D117AE4CC500B245CC /* home_tab_icon_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EC14C317AE4CC500B245CC /* home_tab_icon_1@2x.png */; };
@@ -88,6 +90,10 @@
 		7F48D57512D1B88500DE44F6 /* TabBarSelection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabBarSelection.png; sourceTree = "<group>"; };
 		7F48D57612D1B88500DE44F6 /* TabBarSelection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarSelection@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* CustomTabBar-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CustomTabBar-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		9667BFD817AF1BE700E28245 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		9667BFD917AF1BE700E28245 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		9667BFDC17AF1BFD00E28245 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		9667BFDD17AF1BFD00E28245 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		96EC14C117AE4CC500B245CC /* mask_navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask_navbar.png; sourceTree = "<group>"; };
 		96EC14C217AE4CC500B245CC /* mask_navbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask_navbar@2x.png"; sourceTree = "<group>"; };
 		96EC14C317AE4CC500B245CC /* home_tab_icon_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_tab_icon_1@2x.png"; sourceTree = "<group>"; };
@@ -127,6 +133,10 @@
 				28D7ACF70DDB3853001CB0EB /* CustomTabBarViewController.m */,
 				7F48D4FB12D139C900DE44F6 /* CustomTabBar.h */,
 				7F48D4FC12D139C900DE44F6 /* CustomTabBar.m */,
+				9667BFD817AF1BE700E28245 /* FirstViewController.h */,
+				9667BFD917AF1BE700E28245 /* FirstViewController.m */,
+				9667BFDC17AF1BFD00E28245 /* SecondViewController.h */,
+				9667BFDD17AF1BFD00E28245 /* SecondViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -321,6 +331,8 @@
 				1D3623260D0F684500981E51 /* CustomTabBarAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* CustomTabBarViewController.m in Sources */,
 				7F48D4FD12D139C900DE44F6 /* CustomTabBar.m in Sources */,
+				9667BFDA17AF1BE700E28245 /* FirstViewController.m in Sources */,
+				9667BFDE17AF1BFD00E28245 /* SecondViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

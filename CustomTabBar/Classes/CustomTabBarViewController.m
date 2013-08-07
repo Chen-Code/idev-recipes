@@ -26,6 +26,7 @@
 //
 
 #import "CustomTabBarViewController.h"
+#import "FirstViewController.h"
 
 #define SELECTED_VIEW_CONTROLLER_TAG 98456345
 
@@ -38,33 +39,43 @@ const CGFloat tabbarHeight = 45.0;
 - (void) awakeFromNib
 {
   // Set up some fake view controllers each with a different background color so we can visually see the controllers getting swapped around
-  UIViewController *detailController1 = [[[UIViewController alloc] init] autorelease];
+  FirstViewController *detailController1 = [[[FirstViewController alloc] init] autorelease];
   detailController1.view.backgroundColor = [UIColor redColor];
+    UINavigationController *detailNavController1 = [[UINavigationController alloc] initWithRootViewController:detailController1];
+    detailNavController1.delegate = self;
 
-  UIViewController *detailController2 = [[[UIViewController alloc] init] autorelease];
+  FirstViewController *detailController2 = [[[FirstViewController alloc] init] autorelease];
   detailController2.view.backgroundColor = [UIColor greenColor];
+    UINavigationController *detailNavController2 = [[UINavigationController alloc] initWithRootViewController:detailController2];
+    detailNavController2.delegate = self;
 
-  UIViewController *detailController3 = [[[UIViewController alloc] init] autorelease];
+  FirstViewController *detailController3 = [[[FirstViewController alloc] init] autorelease];
   detailController3.view.backgroundColor = [UIColor blueColor];
+    UINavigationController *detailNavController3 = [[UINavigationController alloc] initWithRootViewController:detailController3];
+    detailNavController3.delegate = self;
 
-  UIViewController *detailController4 = [[[UIViewController alloc] init] autorelease];
+  FirstViewController *detailController4 = [[[FirstViewController alloc] init] autorelease];
   detailController4.view.backgroundColor = [UIColor cyanColor];
+    UINavigationController *detailNavController4 = [[UINavigationController alloc] initWithRootViewController:detailController4];
+    detailNavController4.delegate = self;
 
-  UIViewController *detailController5 = [[[UIViewController alloc] init] autorelease];
+  FirstViewController *detailController5 = [[[FirstViewController alloc] init] autorelease];
   detailController5.view.backgroundColor = [UIColor purpleColor];
+    UINavigationController *detailNavController5 = [[UINavigationController alloc] initWithRootViewController:detailController5];
+    detailNavController5.delegate = self;
 
   tabBarItems = [[NSArray arrayWithObjects:
-              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_1.png", @"image", detailController1, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_2.png", @"image", detailController2, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_3.png", @"image", detailController3, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_4.png", @"image", detailController4, @"viewController", nil],
-              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_5.png", @"image", detailController5, @"viewController", nil], nil] retain];
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_1.png", @"image", detailNavController1, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_2.png", @"image", detailNavController2, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_3.png", @"image", detailNavController3, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_4.png", @"image", detailNavController4, @"viewController", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"home_tab_icon_5.png", @"image", detailNavController5, @"viewController", nil], nil] retain];
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
+    tabBarIsShow = YES;
   // Use the TabBarGradient image to figure out the tab bar's height (22x2=44)
 //  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];
   
@@ -81,6 +92,50 @@ const CGFloat tabbarHeight = 45.0;
 }
 
 #pragma mark -
+
+- (void)navigationController:(UINavigationController *)navController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (viewController.hidesBottomBarWhenPushed)
+    {
+        [self hideTabBar];
+    }
+    else
+    {
+        [self showTabBar];
+    }
+    
+}
+
+- (void)hideTabBar {
+    if (!tabBarIsShow)
+    { //is hidden
+        return;
+    }
+    [UIView animateWithDuration:0.35
+                     animations:^{
+                         CGRect tabFrame = tabBar.frame;
+                         //tabFrame.origin.y = CGRectGetMaxY(window.bounds);
+                         tabFrame.origin.x = 0 - tabFrame.size.width;
+                         tabBar.frame = tabFrame;
+                     }];
+    tabBarIsShow = NO;
+}
+
+
+- (void)showTabBar {
+    if (tabBarIsShow)
+    { // is showing
+        return;
+    }
+    [UIView animateWithDuration:0.35
+                     animations:^{
+                         CGRect tabFrame = tabBar.frame;
+                         //tabFrame.origin.y = CGRectGetMaxY(window.bounds) - CGRectGetHeight(tabBar.frame);
+                         tabFrame.origin.x = CGRectGetWidth(tabFrame) + CGRectGetMinX(tabFrame);
+                         tabBar.frame = tabFrame;
+                     }];
+    tabBarIsShow = YES;
+}
 #pragma mark CustomTabBarDelegate
 
 - (UIImage*) imageFor:(CustomTabBar*)tabBar atIndex:(NSUInteger)itemIndex
@@ -182,7 +237,7 @@ const CGFloat tabbarHeight = 45.0;
   
   // Get the right view controller
   NSDictionary* data = [tabBarItems objectAtIndex:itemIndex];
-  UIViewController* viewController = [data objectForKey:@"viewController"];
+  FirstViewController* viewController = [data objectForKey:@"viewController"];
 
   // Use the TabBarGradient image to figure out the tab bar's height (22x2=44)
 //  UIImage* tabBarGradient = [UIImage imageNamed:@"TabBarGradient.png"];

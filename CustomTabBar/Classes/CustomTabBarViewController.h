@@ -27,9 +27,10 @@
 
 #import "CustomTabBar.h"
 
-@interface CustomTabBarViewController : UIViewController <CustomTabBarDelegate>
+@interface CustomTabBarViewController : UIViewController <CustomTabBarDelegate, UINavigationControllerDelegate>
 {
   CustomTabBar* tabBar;
+    BOOL tabBarIsShow;
 }
 
 @property (nonatomic, retain) CustomTabBar* tabBar;
